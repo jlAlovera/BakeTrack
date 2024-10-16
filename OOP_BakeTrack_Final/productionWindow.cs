@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,15 +16,13 @@ namespace OOP_BakeTrack_Final
         inventoryWindow inventoryWindow;
         mainWindow mainWindow;
 
+        private int selectedId;
+        private DataGridViewRow selectedRow = null;
 
         public productionWindow()
         {
             InitializeComponent();
-        }
-
-        private void restock_Click(object sender, EventArgs e)
-        {
-
+            refreshTable();
         }
 
         private void menuButton_Click(object sender, EventArgs e)
@@ -56,6 +55,28 @@ namespace OOP_BakeTrack_Final
             }
         }
 
+        private void refreshTable()
+        {
+            dataGridView.Rows.Clear();
+
+            SqlConnection conn = Connection.getConn();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM BakeTrack_Products", conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                dataGridView.Rows.Add(
+                    reader[0].ToString(),
+                    reader[1].ToString(),
+                    reader[2].ToString(),
+                    String.Format("{0:0.00}", ((double) reader[3])),
+                    ((DateTime)reader[4]).ToShortDateString(),
+                    String.Format("{0:0.00}", ((double)reader[5])));
+            }
+            cmd.Dispose();
+            reader.Close();
+            conn.Close();
+        }
         private void home_Click(object sender, EventArgs e)
         {
             if (mainWindow == null)
@@ -91,9 +112,138 @@ namespace OOP_BakeTrack_Final
             }
         }
 
+        private (string, int, double) getFieldValues()
+        {
+            if (textBoxName.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("Name should not be empty!");
+                throw new Exception();
+            }
+            uint quantity;
+            try
+            {
+                quantity = Convert.ToUInt32(textBoxQuantity.Text);
+                if (quantity <= 0)
+                {
+                    throw new Exception();
+                }
+            } catch (Exception e)
+            {
+                MessageBox.Show("Invalid quantity.");
+                throw new Exception();
+            }
+            double price;
+            try
+            {
+                price = Math.Round(Convert.ToDouble(textBoxPrice.Text), 2);
+                if (price <= 0)
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Invalid price.");
+                throw new Exception();
+            }
+            return (textBoxName.Text, (int) quantity, price);
+        }
+
         private void production_Click(object sender, EventArgs e)
         {
+        }
 
+        private void productionWindow_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void updatePriceLabel()
+        {
+            try
+            {
+                int quantity = Convert.ToInt32(textBoxQuantity.Text);
+                if (quantity <= 0)
+                {
+                    throw new Exception();
+                }
+                double price = Math.Round(Convert.ToDouble(textBoxPrice.Text), 2);
+                if (price <= 0)
+                {
+                    throw new Exception();
+                }
+                double total_price = Math.Round(price * quantity, 2);
+                if (total_price <= 0)
+                {
+                    throw new Exception();
+                }
+                labelTotalCost.Text = " ₱" + String.Format("{0:0.00}", total_price);
+            }
+            catch (Exception ex) {
+                labelTotalCost.Text = " --- ";
+            }
+        }
+
+        private void clearFields()
+        {
+            textBoxName.Text = "";
+            textBoxPrice.Text = "";
+            textBoxQuantity.Text = "";
+            labelTotalCost.Text = " ₱0";
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            String name; int quantity; double price;
+            try
+            {
+                (name, quantity, price) = getFieldValues();
+            }
+            catch (Exception ex) {
+                return;
+            }
+
+            int id = Connection.getVacantID("BakeTrack_Products");
+
+            SqlConnection conn = Connection.getConn();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("INSERT INTO BakeTrack_Products" +
+                                        "(id, name, quantity, price, date_produced, total_price)" +
+                                        "VALUES (@id, @name, @quantity, @price, @date_produced, @total_price)", conn);
+
+            double total_price = Math.Round(quantity * price, 2);
+
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@name", name);
+            cmd.Parameters.AddWithValue("@quantity", quantity);
+            cmd.Parameters.AddWithValue("@price", price);
+            cmd.Parameters.AddWithValue("@date_produced", DateTime.Parse(DateTime.Now.ToString()));
+            cmd.Parameters.AddWithValue("@total_price", total_price);
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+
+            selectedId = -1;
+            refreshTable();
+            clearFields();
+        }
+
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void textBoxPrice_TextChanged(object sender, EventArgs e)
+        {
+            updatePriceLabel();
+        }
+        private void textBoxQuantity_TextChanged(object sender, EventArgs e)
+        {
+            updatePriceLabel();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace OOP_BakeTrack_Final
             cq = Connection.getConn();
             cq.Open();
 
-            string query = "SELECT COUNT(*) FROM BakeTrack_Accounts WHERE UserName = @UserName";
+            string query = "SELECT COUNT(*) FROM BakerTrack_Accounts WHERE UserName = @UserName";
 
             try
             {

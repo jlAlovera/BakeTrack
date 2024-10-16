@@ -86,7 +86,7 @@ namespace OOP_BakeTrack_Final
 
             SqlConnection conn = Connection.getConn();
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Ingredients", conn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM BakeTrack_Inventory", conn);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -98,11 +98,12 @@ namespace OOP_BakeTrack_Final
                     reader[0].ToString(),
                     reader[1].ToString(),
                     reader[2].ToString(),
-                    reader[3].ToString(),
                     reader[4].ToString(),
-                    ((DateTime)reader[5]).ToShortDateString(),
+                    reader[3].ToString(),
+                    reader[5].ToString(),
                     ((DateTime)reader[6]).ToShortDateString(),
-                    reader[7].ToString());
+                    ((DateTime)reader[7]).ToShortDateString(),
+                    String.Format("{0:0.00}", reader[8]));
             }
             cmd.Dispose();
             reader.Close();
@@ -113,6 +114,7 @@ namespace OOP_BakeTrack_Final
         {
             textBoxName.Text = "";
             textBoxQuantity.Text = "";
+            comboxCategory.Text = "";
             textBoxMeasureUnit.Text = "";
             textBoxCost.Text = "";
             textBoxReorder.Text = "";
@@ -124,37 +126,76 @@ namespace OOP_BakeTrack_Final
         {
             string name = textBoxName.Text;
             int quantity;
-            try {
-                quantity = Convert.ToInt32((string)textBoxQuantity.Text);
+            try
+            {
+                quantity = Convert.ToInt32(textBoxQuantity.Text); 
+                if (quantity <= 0)
+                {
+                    throw new Exception();
+                }
             }
-            catch (Exception ex) { MessageBox.Show("Invalid quantity."); return; }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Invalid quantity.");
+                return;
+            }
             string measure_unit = textBoxMeasureUnit.Text;
             double cost;
             try
             {
-                cost = Convert.ToDouble((string)textBoxCost.Text);
+                cost = Math.Round(Convert.ToDouble(textBoxCost.Text), 2);
+                if (cost <= 0)
+                {
+                    throw new Exception();
+                }
             }
-            catch (Exception ex) { MessageBox.Show("Invalid cost."); return; }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Invalid cost.");
+                return;
+            }
             int reorder_lvl;
             try
             {
-                reorder_lvl = Convert.ToInt32((string)textBoxReorder.Text);
+                reorder_lvl = Convert.ToInt32(textBoxReorder.Text);
+                if (reorder_lvl <= 0)
+                {
+                    throw new Exception();
+                }
             }
-            catch (Exception ex) { MessageBox.Show("Invalid re-order level."); return; }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Invalid re-order level.");
+                return;
+            }
 
             string expirationDate = dtpExpiration.Value.ToShortDateString();
             string purchaseDate = dtpPurchase.Value.ToShortDateString();
 
-            Console.WriteLine(expirationDate + " " + purchaseDate);
+            int id = Connection.getVacantID("BakeTrack_Inventory");
 
-            int id = Connection.getVacantID("Ingredients");
+            string category = comboxCategory.Text;
+            double total_cost = Math.Round(Convert.ToDouble(quantity) * cost, 2);
 
             SqlConnection conn = Connection.getConn();
             conn.Open();
-            SqlCommand cmd = new SqlCommand("INSERT INTO Ingredients(id, name, quantity, measurement_unit, reorder_level, purchase, expiration, cost_per_unit) VALUES (" +
-                                            id + ", '" + name + "', " + quantity + ", '" + measure_unit + "', " + reorder_lvl + ", CAST('" + purchaseDate + "' AS Date), CAST('" + expirationDate + "' AS Date), CAST('" + cost + "' AS FLOAT))", conn);
+            SqlCommand cmd = new SqlCommand("INSERT INTO BakeTrack_Inventory" +
+                                            "(id, name, category, quantity, measurement, reorder_level, purchase_date, expiration_date, cost_per_unit, total_cost, last_updated) " +
+                                            "VALUES (@id, @name, @category, @quantity, @measure_unit, @reorder_lvl, @purchase_date, @expiration_date, @cost_per_unit, @total_cost, @last_updated)", conn);
+
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@name", name);
+            cmd.Parameters.AddWithValue("@category", category);
+            cmd.Parameters.AddWithValue("@quantity", quantity);
+            cmd.Parameters.AddWithValue("@measure_unit", measure_unit);
+            cmd.Parameters.AddWithValue("@reorder_lvl", reorder_lvl);
+            cmd.Parameters.AddWithValue("@purchase_date", DateTime.Parse(purchaseDate));
+            cmd.Parameters.AddWithValue("@expiration_date", DateTime.Parse(expirationDate));
+            cmd.Parameters.AddWithValue("@cost_per_unit", cost);
+            cmd.Parameters.AddWithValue("@total_cost", total_cost);
+            cmd.Parameters.AddWithValue("@last_updated", DateTime.Parse(purchaseDate));
+
             cmd.ExecuteNonQuery();
-            cmd.Dispose();
             conn.Close();
 
             selectedId = -1;
@@ -175,40 +216,70 @@ namespace OOP_BakeTrack_Final
             try
             {
                 quantity = Convert.ToInt32((string)textBoxQuantity.Text);
+                if (quantity <= 0)
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception ex) { MessageBox.Show("Invalid quantity."); return; }
             string measure_unit = textBoxMeasureUnit.Text;
             double cost;
             try
             {
-                cost = Convert.ToDouble((string)textBoxCost.Text);
+                cost = Math.Round(Convert.ToDouble((string)textBoxCost.Text), 2);
+                if (cost <= 0)
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception ex) { MessageBox.Show("Invalid cost."); return; }
             int reorder_lvl;
             try
             {
                 reorder_lvl = Convert.ToInt32((string)textBoxReorder.Text);
+                if (reorder_lvl <= 0)
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception ex) { MessageBox.Show("Invalid re-order level."); return; }
 
             string expirationDate = dtpExpiration.Value.ToShortDateString();
             string purchaseDate = dtpPurchase.Value.ToShortDateString();
+            string category = comboxCategory.Text;
+
+            double total_cost = Math.Round(Convert.ToDouble(quantity) * cost, 2);
 
             SqlConnection conn = Connection.getConn();
             conn.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Ingredients SET name='" + name + "', quantity=" + quantity + ", measurement_unit='" + measure_unit + "', reorder_level=" + reorder_lvl + ", purchase=CAST('" + purchaseDate + "' AS Date), expiration=CAST('" + expirationDate + "' AS Date), cost_per_unit=CAST('" + cost + "' AS FLOAT) WHERE id=" + selectedId, conn);
+            SqlCommand cmd = new SqlCommand("UPDATE BakeTrack_Inventory SET name=@name, quantity=@quantity, category=@category, measurement=@measurement, reorder_level=@reorder_level, purchase_date=@purchase_date," +
+                                            "last_updated=@last_updated, expiration_date=@expiration_date, cost_per_unit=@cost_per_unit, total_cost=@total_cost WHERE id=@id", conn);
+
+            cmd.Parameters.AddWithValue("@name", name);
+            cmd.Parameters.AddWithValue("@quantity", quantity);
+            cmd.Parameters.AddWithValue("@category", category);
+            cmd.Parameters.AddWithValue("@measurement", measure_unit);
+            cmd.Parameters.AddWithValue("@reorder_level", reorder_lvl);
+            cmd.Parameters.AddWithValue("@purchase_date", DateTime.Parse(purchaseDate));
+            cmd.Parameters.AddWithValue("@last_updated", DateTime.Parse(purchaseDate));
+            cmd.Parameters.AddWithValue("@expiration_date", DateTime.Parse(expirationDate));
+            cmd.Parameters.AddWithValue("@cost_per_unit", cost);
+            cmd.Parameters.AddWithValue("@total_cost", total_cost);
+            cmd.Parameters.AddWithValue("@id", selectedId);
+
             cmd.ExecuteNonQuery();
             cmd.Dispose();
             conn.Close();
 
             selectedRow.Cells[0].Value = selectedId;
             selectedRow.Cells[1].Value = name;
-            selectedRow.Cells[2].Value = quantity;
+            selectedRow.Cells[2].Value = category;
             selectedRow.Cells[3].Value = measure_unit;
-            selectedRow.Cells[4].Value = reorder_lvl;
-            selectedRow.Cells[5].Value = purchaseDate;
-            selectedRow.Cells[6].Value = expirationDate;
-            selectedRow.Cells[7].Value = cost;
+            selectedRow.Cells[4].Value = quantity;
+            selectedRow.Cells[5].Value = reorder_lvl;
+            selectedRow.Cells[6].Value = purchaseDate;
+            selectedRow.Cells[7].Value = expirationDate;
+            selectedRow.Cells[8].Value = String.Format("{0:0.00}", cost);
 
             selectedId = -1;
             clearFields();
@@ -225,7 +296,7 @@ namespace OOP_BakeTrack_Final
 
             SqlConnection conn = Connection.getConn();
             conn.Open();
-            SqlCommand cmd = new SqlCommand("DELETE FROM Ingredients WHERE id=" + selectedId, conn);
+            SqlCommand cmd = new SqlCommand("DELETE FROM BakeTrack_Inventory WHERE id=" + selectedId, conn);
             cmd.ExecuteNonQuery();
             cmd.Dispose();
             conn.Close();
@@ -256,12 +327,13 @@ namespace OOP_BakeTrack_Final
                                         row.Cells[7].Value.ToString());
                     selectedId = Convert.ToInt32(row.Cells[0].Value);
                     textBoxName.Text = row.Cells[1].Value.ToString();
-                    textBoxQuantity.Text = row.Cells[2].Value.ToString();
+                    comboxCategory.Text = row.Cells[2].Value.ToString();
                     textBoxMeasureUnit.Text = row.Cells[3].Value.ToString();
-                    textBoxReorder.Text = row.Cells[4].Value.ToString();
-                    dtpPurchase.Value = DateTime.ParseExact(row.Cells[5].Value.ToString(), "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-                    dtpExpiration.Value = DateTime.ParseExact(row.Cells[6].Value.ToString(), "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-                    textBoxCost.Text = row.Cells[7].Value.ToString();
+                    textBoxQuantity.Text = row.Cells[4].Value.ToString();
+                    textBoxReorder.Text = row.Cells[5].Value.ToString();
+                    dtpPurchase.Value = DateTime.Parse(row.Cells[6].Value.ToString());
+                    dtpExpiration.Value = DateTime.Parse(row.Cells[7].Value.ToString());
+                    textBoxCost.Text = row.Cells[8].Value.ToString();
 
                     selectedRow = row;
                 }
@@ -287,6 +359,46 @@ namespace OOP_BakeTrack_Final
                 searchTable(search.Text);
                 search.Text = "";
             }
+        }
+
+        private void dtpExpiration_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void reorder_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxReorder_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void purchaseDate_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpPurchase_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void expirationDate_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void inventoryWindow_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

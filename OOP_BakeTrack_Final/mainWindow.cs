@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -24,20 +25,45 @@ namespace OOP_BakeTrack_Final
             InitializeComponent();
             this.IsMdiContainer = true;
             sidebarTimer.Interval = 14;
+
+            updateDataGridViews();
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void updateDataGridViews()
         {
+            dataGridViewRestock.Rows.Clear();
+            dataGridViewExpiration.Rows.Clear();
 
-        }
+            SqlConnection conn = Connection.getConn();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT name, quantity, reorder_level, category, purchase_date, expiration_date FROM BakeTrack_Inventory", conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                if (Convert.ToInt32(reader[1]) < Convert.ToInt32(reader[2]))
+                {
+                    dataGridViewRestock.Rows.Add(
+                    reader[0].ToString(),
+                    reader[1].ToString(),
+                    reader[2].ToString());
+                }
+                DateTime purchaseDate = DateTime.Parse(reader[4].ToString());
+                DateTime expirationDate = DateTime.Parse(reader[5].ToString());
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
+                long daysDifference = Convert.ToInt64(Math.Ceiling((expirationDate - purchaseDate).TotalDays));
+                Console.WriteLine(daysDifference);
+                
+                if (daysDifference <= 5)
+                {
+                    dataGridViewExpiration.Rows.Add(
+                        reader[0].ToString(),
+                        reader[3].ToString(),
+                        ((DateTime)reader[5]).ToShortDateString());
+                }
+            }
+            cmd.Dispose();
+            reader.Close();
+            conn.Close();
 
         }
 
@@ -45,17 +71,6 @@ namespace OOP_BakeTrack_Final
         {
 
         }
-
-        private void panel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-       
 
         private void menuButton_Click(object sender, EventArgs e)
         {
@@ -71,25 +86,25 @@ namespace OOP_BakeTrack_Final
             if (sidebarExpand)
             {
                 sidebar.Width -= 20; 
-                breadPic.Left -= 20;
+            
                 if (sidebar.Width <= sidebar.MinimumSize.Width)
                 {
                     sidebarExpand = false;
                     sidebarTimer.Stop();
                     sidebar.Width = sidebar.MinimumSize.Width;
-                    breadPic.Left = sidebar.Right;
+           
                 }
             }
             else
             {
                 sidebar.Width += 20;
-                breadPic.Left += 20;
+               
                 if (sidebar.Width >= sidebar.MaximumSize.Width)
                 {
                     sidebarExpand = true;
                     sidebarTimer.Stop();
                     sidebar.Width = sidebar.MaximumSize.Width;
-                    breadPic.Left = sidebar.Right;
+                  
                 }
             }
         }
@@ -108,7 +123,7 @@ namespace OOP_BakeTrack_Final
 
         private void home_Click(object sender, EventArgs e)
         {
-            breadPic.Visible = true;
+           
             if (inventoryWindow != null)
             {
                 inventoryWindow.Close();
@@ -117,7 +132,14 @@ namespace OOP_BakeTrack_Final
 
             
             this.Activate();
+            if (inventoryWindow != null)
+                inventoryWindow.Hide();
+            if (productionWindow != null)
+                productionWindow.Hide();
+            panelDashboard.Show();
             sidebarTimer.Start();
+
+            updateDataGridViews();
         }
 
         private void Inventory_FormClosed(Object sender, FormClosedEventArgs e)
@@ -127,17 +149,21 @@ namespace OOP_BakeTrack_Final
 
         private void inventory_Click(object sender, EventArgs e)
         {
-            breadPic.Visible = false;
             if (inventoryWindow == null)
             {
                 inventoryWindow = new inventoryWindow();
                 inventoryWindow.FormClosed += Inventory_FormClosed;
                 inventoryWindow.MdiParent = this;
                 inventoryWindow.Show();
+                panelDashboard.Hide();
             }
             else
             {
                 inventoryWindow.Activate();
+            }
+            if (productionWindow != null){
+                productionWindow.Close();
+                productionWindow = null;
             }
             sidebarTimer.Start();
         }
@@ -149,17 +175,22 @@ namespace OOP_BakeTrack_Final
 
         private void production_Click(object sender, EventArgs e)
         {
-            breadPic.Visible = false;
+            
             if (productionWindow == null)
             {
                 productionWindow = new productionWindow();
                 productionWindow.FormClosed += Production_FormClosed;
                 productionWindow.MdiParent = this;
                 productionWindow.Show();
+                panelDashboard.Hide();
             }
             else
             {
                 productionWindow.Activate();
+            }
+            if (inventoryWindow != null){
+                inventoryWindow.Close();
+                inventoryWindow = null;
             }
             sidebarTimer.Start();
         }
@@ -175,6 +206,21 @@ namespace OOP_BakeTrack_Final
         private void pictureBox5_Click(object sender, EventArgs e)
         {
             WindowState = minimized;
+        }
+
+        private void panel5_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel9_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
