@@ -19,6 +19,11 @@ namespace OOP_BakeTrack_Final
 
         inventoryWindow inventoryWindow;
         productionWindow productionWindow;
+        shoppingListWindow shoppingListWindow;
+
+
+
+
 
         public mainWindow()
         {
@@ -51,7 +56,6 @@ namespace OOP_BakeTrack_Final
                 DateTime expirationDate = DateTime.Parse(reader[5].ToString());
 
                 long daysDifference = Convert.ToInt64(Math.Ceiling((expirationDate - purchaseDate).TotalDays));
-                Console.WriteLine(daysDifference);
                 
                 if (daysDifference <= 5)
                 {
@@ -151,7 +155,7 @@ namespace OOP_BakeTrack_Final
         {
             if (inventoryWindow == null)
             {
-                inventoryWindow = new inventoryWindow();
+                inventoryWindow = new inventoryWindow(this);
                 inventoryWindow.FormClosed += Inventory_FormClosed;
                 inventoryWindow.MdiParent = this;
                 inventoryWindow.Show();
@@ -221,6 +225,11 @@ namespace OOP_BakeTrack_Final
         private void label8_Click(object sender, EventArgs e)
         {
 
+        }
+
+        public void hideMainWindow()
+        {
+            this.Hide();
         }
     }
 }

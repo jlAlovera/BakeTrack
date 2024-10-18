@@ -23,6 +23,9 @@ namespace OOP_BakeTrack_Final
         {
             InitializeComponent();
             refreshTable();
+
+            this.Width = 1776;
+            this.Height = 846;
         }
 
         private void menuButton_Click(object sender, EventArgs e)
@@ -61,7 +64,7 @@ namespace OOP_BakeTrack_Final
 
             SqlConnection conn = Connection.getConn();
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM BakeTrack_Products", conn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM BakeTrack_Products ORDER BY id", conn);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -230,12 +233,59 @@ namespace OOP_BakeTrack_Final
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
+            String name; int quantity; double price;
+            try
+            {
+                (name, quantity, price) = getFieldValues();
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
 
+            SqlConnection conn = Connection.getConn();
+            conn.Open();
+
+            double total_price = Math.Round(quantity * price, 2);
+
+            SqlCommand cmd = new SqlCommand("UPDATE BakeTrack_Products SET name=@name, quantity=@quantity, " +
+                                            "price=@price, total_price=@total_price WHERE id=@id", conn);
+
+            cmd.Parameters.AddWithValue("@id", selectedId);
+            cmd.Parameters.AddWithValue("@name", name);
+            cmd.Parameters.AddWithValue("@quantity", quantity);
+            cmd.Parameters.AddWithValue("@price", price);
+            cmd.Parameters.AddWithValue("@total_price", total_price);
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+
+            selectedRow.Cells[1].Value = name;
+            selectedRow.Cells[2].Value = quantity;
+            selectedRow.Cells[3].Value = String.Format("{0:0.00}", price);
+            selectedRow.Cells[5].Value = String.Format("{0:0.00}", total_price);
+
+            updatePriceLabel();
+
+            selectedId = -1;
+            clearFields();
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            if (selectedId <= 0 | selectedRow == null)
+            {
+                MessageBox.Show("Please select a valid product first!");
+                return;
+            }
+            dataGridView.Rows.Remove(selectedRow);
 
+            SqlConnection conn = Connection.getConn();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("DELETE FROM BakeTrack_Products WHERE id=" + selectedId, conn);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
         }
         private void textBoxPrice_TextChanged(object sender, EventArgs e)
         {
@@ -244,6 +294,44 @@ namespace OOP_BakeTrack_Final
         private void textBoxQuantity_TextChanged(object sender, EventArgs e)
         {
             updatePriceLabel();
+        }
+
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridView_Click(object sender, EventArgs e)
+        {
+            int rowCount = dataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
+            selectedId = -1;
+            selectedRow = null;
+            clearFields();
+            if (rowCount > 0)
+            {
+                Console.WriteLine("Selected rows: " + rowCount);
+                for (int i = 0; i < rowCount; i++)
+                {
+                    if (dataGridView.SelectedRows[i].Cells[0].Value == null)
+                    {
+                        continue;
+                    }
+                    DataGridViewRow row = dataGridView.SelectedRows[i];
+                    selectedId = Convert.ToInt32(row.Cells[0].Value);
+                    textBoxName.Text = row.Cells[1].Value.ToString();
+                    textBoxQuantity.Text = row.Cells[2].Value.ToString();
+                    textBoxPrice.Text = row.Cells[3].Value.ToString();
+
+                    updatePriceLabel();
+
+                    selectedRow = row;
+                }
+            }
+        }
+
+        private void Login_window_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -19,10 +19,28 @@ namespace OOP_BakeTrack_Final
     {
         private int selectedId = -1;
         private DataGridViewRow selectedRow = null;
+        private shoppingListWindow shoppingListWindow;
+
+
+        private mainWindow _mainWindow;  
+
+        public inventoryWindow(mainWindow mainWindow)
+        {
+            InitializeComponent();
+            _mainWindow = mainWindow; // Assign the reference
+            refreshTable();
+
+            this.Width = 1776;
+            this.Height = 846;
+        } 
+
         public inventoryWindow()
         {
             InitializeComponent();
             refreshTable();
+
+            this.Width = 1776; 
+            this.Height =846;
         }
 
         private void panel6_Paint(object sender, PaintEventArgs e)
@@ -86,7 +104,7 @@ namespace OOP_BakeTrack_Final
 
             SqlConnection conn = Connection.getConn();
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM BakeTrack_Inventory", conn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM BakeTrack_Inventory ORDER BY id", conn);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -317,14 +335,6 @@ namespace OOP_BakeTrack_Final
                         continue;
                     }
                     DataGridViewRow row = dataGridView.SelectedRows[i];
-                    Console.WriteLine(row.Cells[0].Value.ToString() + " " +
-                                        row.Cells[1].Value.ToString() + " " +
-                                        row.Cells[2].Value.ToString() + " " +
-                                        row.Cells[3].Value.ToString() + " " +
-                                        row.Cells[4].Value.ToString() + " " +
-                                        row.Cells[5].Value.ToString() + " " +
-                                        row.Cells[6].Value.ToString() + " " +
-                                        row.Cells[7].Value.ToString());
                     selectedId = Convert.ToInt32(row.Cells[0].Value);
                     textBoxName.Text = row.Cells[1].Value.ToString();
                     comboxCategory.Text = row.Cells[2].Value.ToString();
@@ -337,10 +347,6 @@ namespace OOP_BakeTrack_Final
 
                     selectedRow = row;
                 }
-            }
-            else
-            {
-                Console.WriteLine("No rows selected.");
             }
         }
 
@@ -399,6 +405,25 @@ namespace OOP_BakeTrack_Final
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+
+        private void pictureBoxShopping_click(object sender, EventArgs e)
+        {
+            // Ensure shoppingListWindow is instantiated
+            if (shoppingListWindow == null)
+            {
+                shoppingListWindow = new shoppingListWindow(_mainWindow); // Initialize it if it's null
+                shoppingListWindow.FormClosed += ShoppingWindowList_FormClosed; // Handle form closed event
+            }
+
+            shoppingListWindow.Show(); // Show the shopping list window
+            _mainWindow.hideMainWindow(); // Hide the main window
+        }
+
+        public void ShoppingWindowList_FormClosed(Object sender, FormClosedEventArgs e)
+        {
+            //throw new NotImplementedException();
         }
     }
 }

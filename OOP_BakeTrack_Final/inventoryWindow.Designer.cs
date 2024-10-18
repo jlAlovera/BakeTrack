@@ -72,7 +72,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
             this.sidebarTimer = new System.Windows.Forms.Timer(this.components);
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxShopping = new System.Windows.Forms.PictureBox();
             this.shoppingList = new System.Windows.Forms.Label();
             this.dtpPurchase = new System.Windows.Forms.DateTimePicker();
             this.dtpExpiration = new System.Windows.Forms.DateTimePicker();
@@ -95,7 +95,7 @@
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxShopping)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView
@@ -133,7 +133,7 @@
             this.dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView.EnableHeadersVisualStyles = false;
-            this.dataGridView.Location = new System.Drawing.Point(89, 123);
+            this.dataGridView.Location = new System.Drawing.Point(108, 138);
             this.dataGridView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
@@ -151,7 +151,7 @@
             this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView.RowTemplate.Height = 24;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView.Size = new System.Drawing.Size(1551, 297);
+            this.dataGridView.Size = new System.Drawing.Size(1551, 370);
             this.dataGridView.TabIndex = 13;
             this.dataGridView.Click += new System.EventHandler(this.dataGridView_Click);
             // 
@@ -221,8 +221,8 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(89, 458);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox2.Location = new System.Drawing.Point(108, 551);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(1549, 245);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -238,7 +238,7 @@
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAdd.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonAdd.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonAdd.Location = new System.Drawing.Point(1243, 486);
+            this.buttonAdd.Location = new System.Drawing.Point(1261, 580);
             this.buttonAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(273, 47);
@@ -255,7 +255,7 @@
             this.buttonEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEdit.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonEdit.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonEdit.Location = new System.Drawing.Point(1243, 558);
+            this.buttonEdit.Location = new System.Drawing.Point(1261, 651);
             this.buttonEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Size = new System.Drawing.Size(273, 47);
@@ -272,7 +272,7 @@
             this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDelete.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonDelete.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.buttonDelete.Location = new System.Drawing.Point(1243, 630);
+            this.buttonDelete.Location = new System.Drawing.Point(1261, 724);
             this.buttonDelete.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(273, 49);
@@ -284,8 +284,8 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(1188, 50);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox3.Location = new System.Drawing.Point(1080, 64);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(367, 58);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -298,7 +298,7 @@
             this.search.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.search.Font = new System.Drawing.Font("Bernard MT Condensed", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.search.ForeColor = System.Drawing.Color.White;
-            this.search.Location = new System.Drawing.Point(1265, 63);
+            this.search.Location = new System.Drawing.Point(1157, 78);
             this.search.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.search.Multiline = true;
             this.search.Name = "search";
@@ -313,7 +313,7 @@
             this.name.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(213)))), ((int)(((byte)(192)))));
             this.name.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.name.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
-            this.name.Location = new System.Drawing.Point(115, 480);
+            this.name.Location = new System.Drawing.Point(133, 574);
             this.name.Name = "name";
             this.name.Size = new System.Drawing.Size(58, 24);
             this.name.TabIndex = 42;
@@ -325,7 +325,7 @@
             this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(213)))), ((int)(((byte)(192)))));
             this.label2.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
-            this.label2.Location = new System.Drawing.Point(115, 596);
+            this.label2.Location = new System.Drawing.Point(133, 689);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 24);
             this.label2.TabIndex = 43;
@@ -337,7 +337,7 @@
             this.textBoxQuantity.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxQuantity.Font = new System.Drawing.Font("Bernard MT Condensed", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxQuantity.ForeColor = System.Drawing.Color.Black;
-            this.textBoxQuantity.Location = new System.Drawing.Point(325, 592);
+            this.textBoxQuantity.Location = new System.Drawing.Point(344, 686);
             this.textBoxQuantity.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxQuantity.Multiline = true;
             this.textBoxQuantity.Name = "textBoxQuantity";
@@ -350,7 +350,7 @@
             this.textBoxName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxName.Font = new System.Drawing.Font("Bernard MT Condensed", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxName.ForeColor = System.Drawing.Color.Black;
-            this.textBoxName.Location = new System.Drawing.Point(325, 475);
+            this.textBoxName.Location = new System.Drawing.Point(344, 569);
             this.textBoxName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxName.Multiline = true;
             this.textBoxName.Name = "textBoxName";
@@ -363,7 +363,7 @@
             this.textBoxReorder.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxReorder.Font = new System.Drawing.Font("Bernard MT Condensed", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxReorder.ForeColor = System.Drawing.Color.Black;
-            this.textBoxReorder.Location = new System.Drawing.Point(849, 539);
+            this.textBoxReorder.Location = new System.Drawing.Point(868, 633);
             this.textBoxReorder.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxReorder.Multiline = true;
             this.textBoxReorder.Name = "textBoxReorder";
@@ -378,7 +378,7 @@
             this.expirationDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(213)))), ((int)(((byte)(192)))));
             this.expirationDate.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.expirationDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
-            this.expirationDate.Location = new System.Drawing.Point(673, 652);
+            this.expirationDate.Location = new System.Drawing.Point(692, 746);
             this.expirationDate.Name = "expirationDate";
             this.expirationDate.Size = new System.Drawing.Size(134, 24);
             this.expirationDate.TabIndex = 51;
@@ -392,7 +392,7 @@
             this.purchaseDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(213)))), ((int)(((byte)(192)))));
             this.purchaseDate.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.purchaseDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
-            this.purchaseDate.Location = new System.Drawing.Point(673, 599);
+            this.purchaseDate.Location = new System.Drawing.Point(692, 693);
             this.purchaseDate.Name = "purchaseDate";
             this.purchaseDate.Size = new System.Drawing.Size(127, 24);
             this.purchaseDate.TabIndex = 50;
@@ -406,7 +406,7 @@
             this.reorder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(213)))), ((int)(((byte)(192)))));
             this.reorder.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.reorder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
-            this.reorder.Location = new System.Drawing.Point(673, 545);
+            this.reorder.Location = new System.Drawing.Point(692, 639);
             this.reorder.Name = "reorder";
             this.reorder.Size = new System.Drawing.Size(128, 24);
             this.reorder.TabIndex = 49;
@@ -598,16 +598,17 @@
             // 
             this.sidebarTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // pictureBox6
+            // pictureBoxShopping
             // 
-            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(1579, 47);
-            this.pictureBox6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(60, 69);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox6.TabIndex = 62;
-            this.pictureBox6.TabStop = false;
+            this.pictureBoxShopping.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxShopping.Image")));
+            this.pictureBoxShopping.Location = new System.Drawing.Point(1480, 60);
+            this.pictureBoxShopping.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBoxShopping.Name = "pictureBoxShopping";
+            this.pictureBoxShopping.Size = new System.Drawing.Size(60, 69);
+            this.pictureBoxShopping.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxShopping.TabIndex = 62;
+            this.pictureBoxShopping.TabStop = false;
+            this.pictureBoxShopping.Click += new System.EventHandler(this.pictureBoxShopping_click);
             // 
             // shoppingList
             // 
@@ -615,7 +616,7 @@
             this.shoppingList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(213)))), ((int)(((byte)(192)))));
             this.shoppingList.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.shoppingList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
-            this.shoppingList.Location = new System.Drawing.Point(1624, 38);
+            this.shoppingList.Location = new System.Drawing.Point(1524, 53);
             this.shoppingList.Name = "shoppingList";
             this.shoppingList.Size = new System.Drawing.Size(20, 24);
             this.shoppingList.TabIndex = 63;
@@ -624,8 +625,8 @@
             // dtpPurchase
             // 
             this.dtpPurchase.Enabled = false;
-            this.dtpPurchase.Location = new System.Drawing.Point(849, 601);
-            this.dtpPurchase.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpPurchase.Location = new System.Drawing.Point(868, 694);
+            this.dtpPurchase.Margin = new System.Windows.Forms.Padding(4);
             this.dtpPurchase.Name = "dtpPurchase";
             this.dtpPurchase.Size = new System.Drawing.Size(240, 22);
             this.dtpPurchase.TabIndex = 64;
@@ -633,8 +634,8 @@
             // 
             // dtpExpiration
             // 
-            this.dtpExpiration.Location = new System.Drawing.Point(849, 652);
-            this.dtpExpiration.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpExpiration.Location = new System.Drawing.Point(868, 746);
+            this.dtpExpiration.Margin = new System.Windows.Forms.Padding(4);
             this.dtpExpiration.Name = "dtpExpiration";
             this.dtpExpiration.Size = new System.Drawing.Size(240, 22);
             this.dtpExpiration.TabIndex = 65;
@@ -646,7 +647,7 @@
             this.costUnit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(213)))), ((int)(((byte)(192)))));
             this.costUnit.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.costUnit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
-            this.costUnit.Location = new System.Drawing.Point(675, 489);
+            this.costUnit.Location = new System.Drawing.Point(693, 582);
             this.costUnit.Name = "costUnit";
             this.costUnit.Size = new System.Drawing.Size(110, 24);
             this.costUnit.TabIndex = 52;
@@ -659,7 +660,7 @@
             this.measurement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(213)))), ((int)(((byte)(192)))));
             this.measurement.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.measurement.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
-            this.measurement.Location = new System.Drawing.Point(115, 649);
+            this.measurement.Location = new System.Drawing.Point(133, 742);
             this.measurement.Name = "measurement";
             this.measurement.Size = new System.Drawing.Size(172, 24);
             this.measurement.TabIndex = 44;
@@ -671,7 +672,7 @@
             this.textBoxMeasureUnit.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxMeasureUnit.Font = new System.Drawing.Font("Bernard MT Condensed", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxMeasureUnit.ForeColor = System.Drawing.Color.Black;
-            this.textBoxMeasureUnit.Location = new System.Drawing.Point(325, 645);
+            this.textBoxMeasureUnit.Location = new System.Drawing.Point(344, 738);
             this.textBoxMeasureUnit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxMeasureUnit.Multiline = true;
             this.textBoxMeasureUnit.Name = "textBoxMeasureUnit";
@@ -684,7 +685,7 @@
             this.textBoxCost.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxCost.Font = new System.Drawing.Font("Bernard MT Condensed", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxCost.ForeColor = System.Drawing.Color.Black;
-            this.textBoxCost.Location = new System.Drawing.Point(849, 480);
+            this.textBoxCost.Location = new System.Drawing.Point(868, 574);
             this.textBoxCost.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxCost.Multiline = true;
             this.textBoxCost.Name = "textBoxCost";
@@ -698,7 +699,7 @@
             this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(213)))), ((int)(((byte)(192)))));
             this.label1.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
-            this.label1.Location = new System.Drawing.Point(115, 540);
+            this.label1.Location = new System.Drawing.Point(133, 634);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 24);
             this.label1.TabIndex = 66;
@@ -712,7 +713,7 @@
             "Wet Ingredient",
             "Dry Ingredient",
             "Pastry Design"});
-            this.comboxCategory.Location = new System.Drawing.Point(325, 540);
+            this.comboxCategory.Location = new System.Drawing.Point(344, 634);
             this.comboxCategory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboxCategory.Name = "comboxCategory";
             this.comboxCategory.Size = new System.Drawing.Size(243, 24);
@@ -724,7 +725,7 @@
             this.Login_window.AutoSize = true;
             this.Login_window.Font = new System.Drawing.Font("Brush Script MT", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Login_window.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
-            this.Login_window.Location = new System.Drawing.Point(91, 49);
+            this.Login_window.Location = new System.Drawing.Point(111, 64);
             this.Login_window.Name = "Login_window";
             this.Login_window.Size = new System.Drawing.Size(358, 50);
             this.Login_window.TabIndex = 68;
@@ -738,8 +739,8 @@
             "Wet Ingredient",
             "Dry Ingredient",
             "Pastry Design"});
-            this.comboxSearchCategory.Location = new System.Drawing.Point(915, 65);
-            this.comboxSearchCategory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboxSearchCategory.Location = new System.Drawing.Point(832, 81);
+            this.comboxSearchCategory.Margin = new System.Windows.Forms.Padding(4);
             this.comboxSearchCategory.Name = "comboxSearchCategory";
             this.comboxSearchCategory.Size = new System.Drawing.Size(239, 24);
             this.comboxSearchCategory.TabIndex = 69;
@@ -750,7 +751,7 @@
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1749, 763);
+            this.ClientSize = new System.Drawing.Size(1777, 831);
             this.Controls.Add(this.comboxSearchCategory);
             this.Controls.Add(this.Login_window);
             this.Controls.Add(this.comboxCategory);
@@ -758,7 +759,7 @@
             this.Controls.Add(this.dtpExpiration);
             this.Controls.Add(this.dtpPurchase);
             this.Controls.Add(this.shoppingList);
-            this.Controls.Add(this.pictureBox6);
+            this.Controls.Add(this.pictureBoxShopping);
             this.Controls.Add(this.sidebar);
             this.Controls.Add(this.textBoxCost);
             this.Controls.Add(this.textBoxReorder);
@@ -782,8 +783,8 @@
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(90)))), ((int)(((byte)(77)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximumSize = new System.Drawing.Size(1749, 763);
-            this.MinimumSize = new System.Drawing.Size(1533, 763);
+            this.MaximumSize = new System.Drawing.Size(1777, 831);
+            this.MinimumSize = new System.Drawing.Size(1777, 831);
             this.Name = "inventoryWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "inventoryWindow";
@@ -800,7 +801,7 @@
             this.panel3.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxShopping)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -837,7 +838,7 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Timer sidebarTimer;
-        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBoxShopping;
         private System.Windows.Forms.Label shoppingList;
         private System.Windows.Forms.DateTimePicker dtpPurchase;
         private System.Windows.Forms.DateTimePicker dtpExpiration;
