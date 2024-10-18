@@ -317,6 +317,7 @@ namespace OOP_BakeTrack_Final
             conn.Close();
 
             selectedId = -1;
+            clearFields();
         }
         private void textBoxPrice_TextChanged(object sender, EventArgs e)
         {

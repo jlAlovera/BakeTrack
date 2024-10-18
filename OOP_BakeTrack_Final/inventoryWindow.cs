@@ -391,6 +391,7 @@ namespace OOP_BakeTrack_Final
 
             updateRestockLabel();
             selectedId = -1;
+            clearFields();
         }
 
         private void dataGridView_Click(object sender, EventArgs e)
