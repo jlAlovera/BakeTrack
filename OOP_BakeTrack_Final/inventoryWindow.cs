@@ -31,8 +31,9 @@ namespace OOP_BakeTrack_Final
             refreshTable();
             updateRestockLabel();
 
-            this.Width = 1776;
-            this.Height = 846;
+
+            this.Width = 1764;
+            this.Height = 802;
         }
 
         public void clearState()

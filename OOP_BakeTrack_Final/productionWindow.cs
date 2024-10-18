@@ -25,8 +25,8 @@ namespace OOP_BakeTrack_Final
             InitializeComponent();
             refreshTable();
 
-            this.Width = 1776;
-            this.Height = 846;
+            this.Width = 1766;
+            this.Height = 807;
         }
 
         public void clearState()

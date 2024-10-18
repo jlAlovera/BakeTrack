@@ -17,11 +17,14 @@ namespace OOP_BakeTrack_Final
         SqlCommand cmd;
         SqlConnection cq;
         SqlDataReader rd;
+        mainWindow mainWindow = new mainWindow();
 
+        registrationForm registrationForm = new registrationForm();
 
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -40,7 +43,7 @@ namespace OOP_BakeTrack_Final
 
                 if (userCount > 0)
                 {
-                    new mainWindow().Show();
+                    mainWindow.Show();
                     this.Hide();
                 }
                 else
@@ -76,8 +79,8 @@ namespace OOP_BakeTrack_Final
 
         private void label6_Click(object sender, EventArgs e)
         {
-            new registrationForm().Show();
-            this.Close();
+            registrationForm.Show();
+            this.Hide();
         }
 
         private void label5_Click(object sender, EventArgs e)

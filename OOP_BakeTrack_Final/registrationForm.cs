@@ -37,7 +37,7 @@ namespace OOP_BakeTrack_Final
                 string password = txtPassword.Text;
                 string conPass = txtConPassword.Text;
 
-                cmd = new SqlCommand("inset into BakeTrack_Accounts (UserName, Password) values (@UserName,@Password)", cq);
+                cmd = new SqlCommand("INSERT INTO BakerTrack_Accounts (UserName, Password) values (@UserName,@Password)", cq);
 
                 cmd.Parameters.AddWithValue("@UserName", username);
                 cmd.Parameters.AddWithValue("@Password", password);
