@@ -386,6 +386,16 @@ namespace OOP_BakeTrack_Final
             conn.Close();
 
             File.WriteAllText(sfd.FileName, hold);
+
+            conn = Connection.getConn();
+            conn.Open();
+
+            string sql = "DELETE FROM BakeTrack_Products";
+            cmd = new SqlCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+
+            clearState();
         }
     }
 }
