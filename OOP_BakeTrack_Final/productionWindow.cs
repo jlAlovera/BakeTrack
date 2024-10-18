@@ -315,6 +315,8 @@ namespace OOP_BakeTrack_Final
             cmd.ExecuteNonQuery();
             cmd.Dispose();
             conn.Close();
+
+            selectedId = -1;
         }
         private void textBoxPrice_TextChanged(object sender, EventArgs e)
         {

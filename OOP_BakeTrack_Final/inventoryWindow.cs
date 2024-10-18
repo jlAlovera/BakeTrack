@@ -390,6 +390,7 @@ namespace OOP_BakeTrack_Final
             conn.Close();
 
             updateRestockLabel();
+            selectedId = -1;
         }
 
         private void dataGridView_Click(object sender, EventArgs e)
