@@ -71,7 +71,6 @@ namespace OOP_BakeTrack_Final
                     if (Convert.ToInt32(reader[0]) != id)
                     {
                         valid = false;
-                        break;
                     }
                 }
             }

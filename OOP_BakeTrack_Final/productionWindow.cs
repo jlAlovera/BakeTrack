@@ -272,7 +272,7 @@ namespace OOP_BakeTrack_Final
                 return;
             }
 
-            if (Util.checkNameChangeValid("BakeTrack_Products", name, selectedId))
+            if (!Util.checkNameChangeValid("BakeTrack_Products", name, selectedId))
             {
                 MessageBox.Show("Name already exists! Please try another one.");
                 return;

@@ -288,7 +288,7 @@ namespace OOP_BakeTrack_Final
 
                 string name = Util.checkValidName(textBoxName.Text);
 
-                if (Util.checkNameChangeValid("BakeTrack_Inventory", name, selectedId))
+                if (!Util.checkNameChangeValid("BakeTrack_Inventory", name, selectedId))
                 {
                     MessageBox.Show("Name already exists! Please try another one.");
                     return;
