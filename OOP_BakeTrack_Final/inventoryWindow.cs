@@ -29,10 +29,23 @@ namespace OOP_BakeTrack_Final
             InitializeComponent();
             _mainWindow = mainWindow; // Assign the reference
             refreshTable();
+            updateRestockLabel();
 
             this.Width = 1776;
             this.Height = 846;
-        } 
+        }
+
+        public void clearState()
+        {
+            selectedId = -1;
+            selectedRow = null;
+            dataGridView.ClearSelection();
+
+            clearFields();
+
+            refreshTable();
+            updateRestockLabel();
+        }
 
         public inventoryWindow()
         {
@@ -93,12 +106,33 @@ namespace OOP_BakeTrack_Final
             }
         }
 
-        private void refreshTable()
+        private void updateRestockLabel()
         {
-            searchTable(null);
+            SqlConnection conn = Connection.getConn();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT name, quantity, reorder_level, category, purchase_date, expiration_date FROM BakeTrack_Inventory", conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            int restock_num = 0;
+            while (reader.Read())
+            {
+                if (Convert.ToInt32(reader[1]) < Convert.ToInt32(reader[2]))
+                {
+                    restock_num++;
+                }
+            }
+            cmd.Dispose();
+            reader.Close();
+            conn.Close();
+
+            shoppingList.Text = restock_num.ToString();
         }
 
-        private void searchTable(string shouldCnt)
+        private void refreshTable()
+        {
+            searchTable(null, null);
+        }
+
+        private void searchTable(string shouldCnt, string category)
         {
             dataGridView.Rows.Clear();
 
@@ -108,7 +142,11 @@ namespace OOP_BakeTrack_Final
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                if (shouldCnt != null && !reader[1].ToString().ToLower().Contains(shouldCnt.Trim().ToLower()))
+                if (category != null && !category.Equals("Any Ingredient") && !reader[2].ToString().Equals(category))
+                {
+                    continue;
+                }
+                if ((shouldCnt != null && shouldCnt.Trim().Length > 0 && !reader[1].ToString().ToLower().Contains(shouldCnt.Trim().ToLower())))
                 {
                     continue;
                 }
@@ -132,7 +170,7 @@ namespace OOP_BakeTrack_Final
         {
             textBoxName.Text = "";
             textBoxQuantity.Text = "";
-            comboxCategory.Text = "";
+            comboxCategory.Text = "Wet Ingredient";
             textBoxMeasureUnit.Text = "";
             textBoxCost.Text = "";
             textBoxReorder.Text = "";
@@ -219,6 +257,7 @@ namespace OOP_BakeTrack_Final
             selectedId = -1;
             refreshTable();
             clearFields();
+            updateRestockLabel();
         }
 
         private void buttonEdit_Click(object sender, EventArgs e)
@@ -301,6 +340,7 @@ namespace OOP_BakeTrack_Final
 
             selectedId = -1;
             clearFields();
+            updateRestockLabel();
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -318,6 +358,8 @@ namespace OOP_BakeTrack_Final
             cmd.ExecuteNonQuery();
             cmd.Dispose();
             conn.Close();
+
+            updateRestockLabel();
         }
 
         private void dataGridView_Click(object sender, EventArgs e)
@@ -356,13 +398,8 @@ namespace OOP_BakeTrack_Final
             {
                 selectedId = -1;
                 clearFields();
-                if (search.Text.Trim().Length == 0)
-                {
-                    refreshTable();
-                    return;
-                }
                 Console.WriteLine($"Search {search.Text}");
-                searchTable(search.Text);
+                searchTable(search.Text, comboxSearchCategory.Text);
                 search.Text = "";
             }
         }
@@ -413,8 +450,10 @@ namespace OOP_BakeTrack_Final
             // Ensure shoppingListWindow is instantiated
             if (shoppingListWindow == null)
             {
-                shoppingListWindow = new shoppingListWindow(_mainWindow); // Initialize it if it's null
+                shoppingListWindow = new shoppingListWindow(_mainWindow, this); // Initialize it if it's null
                 shoppingListWindow.FormClosed += ShoppingWindowList_FormClosed; // Handle form closed event
+            } else { 
+                shoppingListWindow.clearState();
             }
 
             shoppingListWindow.Show(); // Show the shopping list window
@@ -424,6 +463,15 @@ namespace OOP_BakeTrack_Final
         public void ShoppingWindowList_FormClosed(Object sender, FormClosedEventArgs e)
         {
             //throw new NotImplementedException();
+        }
+
+        private void comboxSearchCategory_TextChanged(object sender, EventArgs e)
+        {
+            selectedId = -1;
+            clearFields();
+            Console.WriteLine($"Search {search.Text}");
+            searchTable(search.Text, comboxSearchCategory.Text);
+            search.Text = "";
         }
     }
 }

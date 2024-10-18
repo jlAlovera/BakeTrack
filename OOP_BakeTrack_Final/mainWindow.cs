@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace OOP_BakeTrack_Final
 {
@@ -21,10 +22,6 @@ namespace OOP_BakeTrack_Final
         productionWindow productionWindow;
         shoppingListWindow shoppingListWindow;
 
-
-
-
-
         public mainWindow()
         {
             InitializeComponent();
@@ -32,6 +29,31 @@ namespace OOP_BakeTrack_Final
             sidebarTimer.Interval = 14;
 
             updateDataGridViews();
+            updateHeader();
+        }
+
+        private void updateHeader()
+        {
+            SqlConnection conn = Connection.getConn();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT name, quantity, price, total_price FROM BakeTrack_Products WHERE date_produced=@date_produced", conn);
+            cmd.Parameters.AddWithValue("@date_produced", DateTime.Parse(DateTime.Now.ToShortDateString()));
+            SqlDataReader reader = cmd.ExecuteReader();
+            double total_price = 0.0;
+            int varieties = 0;
+            while (reader.Read())
+            {
+                double add = Convert.ToDouble(reader[3]);
+                total_price += add;
+                varieties++;
+            }
+            cmd.Dispose();
+            reader.Close();
+            conn.Close();
+
+            labelAmountProduced.Text = String.Format("{0:0.00}", total_price);
+            labelVarieties.Text = varieties.ToString();
+
         }
 
         private void updateDataGridViews()
@@ -68,7 +90,6 @@ namespace OOP_BakeTrack_Final
             cmd.Dispose();
             reader.Close();
             conn.Close();
-
         }
 
         private void mainWindow_Load(object sender, EventArgs e)
@@ -144,6 +165,7 @@ namespace OOP_BakeTrack_Final
             sidebarTimer.Start();
 
             updateDataGridViews();
+            updateHeader();
         }
 
         private void Inventory_FormClosed(Object sender, FormClosedEventArgs e)
@@ -163,6 +185,7 @@ namespace OOP_BakeTrack_Final
             }
             else
             {
+                inventoryWindow.clearState();
                 inventoryWindow.Activate();
             }
             if (productionWindow != null){
@@ -190,6 +213,7 @@ namespace OOP_BakeTrack_Final
             }
             else
             {
+                productionWindow.clearState();
                 productionWindow.Activate();
             }
             if (inventoryWindow != null){

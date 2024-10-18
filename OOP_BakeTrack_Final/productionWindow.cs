@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace OOP_BakeTrack_Final
 {
@@ -26,6 +27,14 @@ namespace OOP_BakeTrack_Final
 
             this.Width = 1776;
             this.Height = 846;
+        }
+
+        public void clearState()
+        {
+            dataGridView.ClearSelection();
+            selectedRow = null;
+            selectedId = -1;
+            refreshTable();
         }
 
         private void menuButton_Click(object sender, EventArgs e)
@@ -58,7 +67,7 @@ namespace OOP_BakeTrack_Final
             }
         }
 
-        private void refreshTable()
+        public void refreshTable()
         {
             dataGridView.Rows.Clear();
 
@@ -332,6 +341,43 @@ namespace OOP_BakeTrack_Final
         private void Login_window_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonRecord_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            sfd.RestoreDirectory = true;
+
+            if (sfd.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            String hold = "";
+
+            SqlConnection conn = Connection.getConn();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT name, quantity, price, total_price FROM BakeTrack_Products WHERE date_produced=@date_produced", conn);
+            String datestr = DateTime.Now.ToShortDateString();
+            cmd.Parameters.AddWithValue("@date_produced", DateTime.Parse(datestr));
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            hold += datestr + "\r\n\r\n";
+
+            while (reader.Read())
+            {
+                hold += "Name: " + reader[0].ToString() + "\r\n";
+                hold += "Quantity: " + reader[1].ToString() + "\r\n";
+                hold += "Price: " + String.Format("{0:0.00}", Convert.ToDouble(reader[2])) + "\r\n";
+                hold += "Total Price: " + String.Format("{0:0.00}", Convert.ToDouble(reader[3])) + "\r\n";
+                hold += "\r\n";
+            }
+            cmd.Dispose();
+            reader.Close();
+            conn.Close();
+
+            File.WriteAllText(sfd.FileName, hold);
         }
     }
 }
