@@ -52,5 +52,35 @@ namespace OOP_BakeTrack_Final
             cq.Dispose();
             return false;
         }
+
+        public static bool checkNameChangeValid(String table, String name, int id)
+        {
+            SqlConnection cq = Connection.getConn();
+            cq.Open();
+
+            string query = "SELECT id FROM " + table + " WHERE name = @name";
+            bool valid = true;
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand(query, cq);
+                cmd.Parameters.AddWithValue("@name", name);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    if (Convert.ToInt32(reader[0]) != id)
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            { }
+
+            cq.Close();
+            cq.Dispose();
+            return valid;
+        }
     }
 }

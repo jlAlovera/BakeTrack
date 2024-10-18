@@ -256,6 +256,12 @@ namespace OOP_BakeTrack_Final
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
+            if (selectedId <= 0 | selectedRow == null)
+            {
+                MessageBox.Show("Please select a valid product first!");
+                return;
+            }
+
             String name; int quantity; double price;
             try
             {
@@ -266,7 +272,7 @@ namespace OOP_BakeTrack_Final
                 return;
             }
 
-            if (Util.checkIfNameExists("BakeTrack_Products", name))
+            if (Util.checkNameChangeValid("BakeTrack_Products", name, selectedId))
             {
                 MessageBox.Show("Name already exists! Please try another one.");
                 return;
