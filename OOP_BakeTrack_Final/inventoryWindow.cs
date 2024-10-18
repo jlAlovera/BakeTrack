@@ -184,6 +184,13 @@ namespace OOP_BakeTrack_Final
             try {
 
             string name = Util.checkValidName(textBoxName.Text);
+
+            if (Util.checkIfNameExists("BakeTrack_Inventory", name))
+            {
+                MessageBox.Show("Name already exists! Please try another one.");
+                return;
+            }
+
             int quantity;
             try
             {
@@ -280,6 +287,13 @@ namespace OOP_BakeTrack_Final
                 }
 
                 string name = Util.checkValidName(textBoxName.Text);
+
+                if (Util.checkIfNameExists("BakeTrack_Inventory", name))
+                {
+                    MessageBox.Show("Name already exists! Please try another one.");
+                    return;
+                }
+
                 int quantity;
                 try
                 {

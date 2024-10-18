@@ -223,6 +223,12 @@ namespace OOP_BakeTrack_Final
                 return;
             }
 
+            if (Util.checkIfNameExists("BakeTrack_Products", name))
+            {
+                MessageBox.Show("Name already exists! Please try another one.");
+                return;
+            }
+
             int id = Connection.getVacantID("BakeTrack_Products");
 
             SqlConnection conn = Connection.getConn();
@@ -257,6 +263,12 @@ namespace OOP_BakeTrack_Final
             }
             catch (Exception ex)
             {
+                return;
+            }
+
+            if (Util.checkIfNameExists("BakeTrack_Products", name))
+            {
+                MessageBox.Show("Name already exists! Please try another one.");
                 return;
             }
 
