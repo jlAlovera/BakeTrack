@@ -181,7 +181,9 @@ namespace OOP_BakeTrack_Final
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            string name = textBoxName.Text;
+            try {
+
+            string name = Util.checkValidName(textBoxName.Text);
             int quantity;
             try
             {
@@ -196,7 +198,7 @@ namespace OOP_BakeTrack_Final
                 MessageBox.Show("Invalid quantity.");
                 return;
             }
-            string measure_unit = textBoxMeasureUnit.Text;
+            string measure_unit = Util.checkValidName(textBoxMeasureUnit.Text);
             double cost;
             try
             {
@@ -259,89 +261,102 @@ namespace OOP_BakeTrack_Final
             refreshTable();
             clearFields();
             updateRestockLabel();
+
+            } catch (Exception ex)
+            {
+                MessageBox.Show("Error in adding inventory. Please check your input.");
+            }
         }
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
-            if (selectedId <= 0 | selectedRow == null)
-            {
-                MessageBox.Show("Please select a valid ingredient first!");
-                return;
-            }
-
-            string name = textBoxName.Text;
-            int quantity;
             try
             {
-                quantity = Convert.ToInt32((string)textBoxQuantity.Text);
-                if (quantity <= 0)
+
+                if (selectedId <= 0 | selectedRow == null)
                 {
-                    throw new Exception();
+                    MessageBox.Show("Please select a valid ingredient first!");
+                    return;
                 }
-            }
-            catch (Exception ex) { MessageBox.Show("Invalid quantity."); return; }
-            string measure_unit = textBoxMeasureUnit.Text;
-            double cost;
-            try
+
+                string name = Util.checkValidName(textBoxName.Text);
+                int quantity;
+                try
+                {
+                    quantity = Convert.ToInt32((string)textBoxQuantity.Text);
+                    if (quantity <= 0)
+                    {
+                        throw new Exception();
+                    }
+                }
+                catch (Exception ex) { MessageBox.Show("Invalid quantity."); return; }
+                string measure_unit = Util.checkValidName(textBoxMeasureUnit.Text);
+                double cost;
+                try
+                {
+                    cost = Math.Round(Convert.ToDouble((string)textBoxCost.Text), 2);
+                    if (cost <= 0)
+                    {
+                        throw new Exception();
+                    }
+                }
+                catch (Exception ex) { MessageBox.Show("Invalid cost."); return; }
+                int reorder_lvl;
+                try
+                {
+                    reorder_lvl = Convert.ToInt32((string)textBoxReorder.Text);
+                    if (reorder_lvl <= 0)
+                    {
+                        throw new Exception();
+                    }
+                }
+                catch (Exception ex) { MessageBox.Show("Invalid re-order level."); return; }
+
+                string expirationDate = dtpExpiration.Value.ToShortDateString();
+                string purchaseDate = dtpPurchase.Value.ToShortDateString();
+                string category = Util.checkValidName(comboxCategory.Text);
+
+                double total_cost = Math.Round(Convert.ToDouble(quantity) * cost, 2);
+
+                SqlConnection conn = Connection.getConn();
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("UPDATE BakeTrack_Inventory SET name=@name, quantity=@quantity, category=@category, measurement=@measurement, reorder_level=@reorder_level, purchase_date=@purchase_date," +
+                                                "last_updated=@last_updated, expiration_date=@expiration_date, cost_per_unit=@cost_per_unit, total_cost=@total_cost WHERE id=@id", conn);
+
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@quantity", quantity);
+                cmd.Parameters.AddWithValue("@category", category);
+                cmd.Parameters.AddWithValue("@measurement", measure_unit);
+                cmd.Parameters.AddWithValue("@reorder_level", reorder_lvl);
+                cmd.Parameters.AddWithValue("@purchase_date", DateTime.Parse(purchaseDate));
+                cmd.Parameters.AddWithValue("@last_updated", DateTime.Parse(purchaseDate));
+                cmd.Parameters.AddWithValue("@expiration_date", DateTime.Parse(expirationDate));
+                cmd.Parameters.AddWithValue("@cost_per_unit", cost);
+                cmd.Parameters.AddWithValue("@total_cost", total_cost);
+                cmd.Parameters.AddWithValue("@id", selectedId);
+
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                conn.Close();
+
+                selectedRow.Cells[0].Value = selectedId;
+                selectedRow.Cells[1].Value = name;
+                selectedRow.Cells[2].Value = category;
+                selectedRow.Cells[3].Value = measure_unit;
+                selectedRow.Cells[4].Value = quantity;
+                selectedRow.Cells[5].Value = reorder_lvl;
+                selectedRow.Cells[6].Value = purchaseDate;
+                selectedRow.Cells[7].Value = expirationDate;
+                selectedRow.Cells[8].Value = String.Format("{0:0.00}", cost);
+
+                selectedId = -1;
+                clearFields();
+                updateRestockLabel();
+
+            } catch (Exception ex)
             {
-                cost = Math.Round(Convert.ToDouble((string)textBoxCost.Text), 2);
-                if (cost <= 0)
-                {
-                    throw new Exception();
-                }
+                MessageBox.Show("Error in editing inventory. Please check your input.");
             }
-            catch (Exception ex) { MessageBox.Show("Invalid cost."); return; }
-            int reorder_lvl;
-            try
-            {
-                reorder_lvl = Convert.ToInt32((string)textBoxReorder.Text);
-                if (reorder_lvl <= 0)
-                {
-                    throw new Exception();
-                }
-            }
-            catch (Exception ex) { MessageBox.Show("Invalid re-order level."); return; }
-
-            string expirationDate = dtpExpiration.Value.ToShortDateString();
-            string purchaseDate = dtpPurchase.Value.ToShortDateString();
-            string category = comboxCategory.Text;
-
-            double total_cost = Math.Round(Convert.ToDouble(quantity) * cost, 2);
-
-            SqlConnection conn = Connection.getConn();
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE BakeTrack_Inventory SET name=@name, quantity=@quantity, category=@category, measurement=@measurement, reorder_level=@reorder_level, purchase_date=@purchase_date," +
-                                            "last_updated=@last_updated, expiration_date=@expiration_date, cost_per_unit=@cost_per_unit, total_cost=@total_cost WHERE id=@id", conn);
-
-            cmd.Parameters.AddWithValue("@name", name);
-            cmd.Parameters.AddWithValue("@quantity", quantity);
-            cmd.Parameters.AddWithValue("@category", category);
-            cmd.Parameters.AddWithValue("@measurement", measure_unit);
-            cmd.Parameters.AddWithValue("@reorder_level", reorder_lvl);
-            cmd.Parameters.AddWithValue("@purchase_date", DateTime.Parse(purchaseDate));
-            cmd.Parameters.AddWithValue("@last_updated", DateTime.Parse(purchaseDate));
-            cmd.Parameters.AddWithValue("@expiration_date", DateTime.Parse(expirationDate));
-            cmd.Parameters.AddWithValue("@cost_per_unit", cost);
-            cmd.Parameters.AddWithValue("@total_cost", total_cost);
-            cmd.Parameters.AddWithValue("@id", selectedId);
-
-            cmd.ExecuteNonQuery();
-            cmd.Dispose();
-            conn.Close();
-
-            selectedRow.Cells[0].Value = selectedId;
-            selectedRow.Cells[1].Value = name;
-            selectedRow.Cells[2].Value = category;
-            selectedRow.Cells[3].Value = measure_unit;
-            selectedRow.Cells[4].Value = quantity;
-            selectedRow.Cells[5].Value = reorder_lvl;
-            selectedRow.Cells[6].Value = purchaseDate;
-            selectedRow.Cells[7].Value = expirationDate;
-            selectedRow.Cells[8].Value = String.Format("{0:0.00}", cost);
-
-            selectedId = -1;
-            clearFields();
-            updateRestockLabel();
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)

@@ -126,6 +126,14 @@ namespace OOP_BakeTrack_Final
 
         private (string, int, double) getFieldValues()
         {
+            try
+            {
+                Util.checkValidName(textBoxName.Text);
+            } catch (Exception ex)
+            {
+                MessageBox.Show("Invalid name!");
+                throw new Exception();
+            }
             if (textBoxName.Text.Trim().Length == 0)
             {
                 MessageBox.Show("Name should not be empty!");

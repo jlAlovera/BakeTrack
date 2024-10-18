@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.Button btnClear;
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnClear = new System.Windows.Forms.Button();
             this.btnRegistration = new System.Windows.Forms.Button();
             this.txtConPassword = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -40,6 +40,7 @@
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            btnClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // checkBox1
@@ -61,8 +62,8 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(90)))), ((int)(((byte)(77)))));
-            this.label6.Location = new System.Drawing.Point(170, 691);
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
+            this.label6.Location = new System.Drawing.Point(173, 691);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(117, 24);
             this.label6.TabIndex = 22;
@@ -82,23 +83,23 @@
             // 
             // btnClear
             // 
-            this.btnClear.BackColor = System.Drawing.Color.White;
-            this.btnClear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnClear.FlatAppearance.BorderSize = 0;
-            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClear.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(90)))), ((int)(((byte)(77)))));
-            this.btnClear.Location = new System.Drawing.Point(29, 564);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(415, 50);
-            this.btnClear.TabIndex = 20;
-            this.btnClear.Text = "CLEAR";
-            this.btnClear.UseVisualStyleBackColor = false;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            btnClear.BackColor = System.Drawing.Color.White;
+            btnClear.Cursor = System.Windows.Forms.Cursors.Hand;
+            btnClear.FlatAppearance.BorderSize = 0;
+            btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btnClear.Font = new System.Drawing.Font("Bernard MT Condensed", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
+            btnClear.Location = new System.Drawing.Point(29, 564);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new System.Drawing.Size(415, 50);
+            btnClear.TabIndex = 20;
+            btnClear.Text = "CLEAR";
+            btnClear.UseVisualStyleBackColor = false;
+            btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnRegistration
             // 
-            this.btnRegistration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(99)))), ((int)(((byte)(83)))));
+            this.btnRegistration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
             this.btnRegistration.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRegistration.FlatAppearance.BorderSize = 0;
             this.btnRegistration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -129,7 +130,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(90)))), ((int)(((byte)(77)))));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
             this.label4.Location = new System.Drawing.Point(28, 337);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(150, 24);
@@ -153,7 +154,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(90)))), ((int)(((byte)(77)))));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
             this.label3.Location = new System.Drawing.Point(28, 228);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 24);
@@ -176,7 +177,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Bernard MT Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(90)))), ((int)(((byte)(77)))));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
             this.label2.Location = new System.Drawing.Point(28, 130);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 24);
@@ -187,7 +188,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Brush Script MT", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(90)))), ((int)(((byte)(77)))));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(27)))), ((int)(((byte)(22)))));
             this.label1.Location = new System.Drawing.Point(143, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(193, 50);
@@ -202,7 +203,7 @@
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.btnClear);
+            this.Controls.Add(btnClear);
             this.Controls.Add(this.btnRegistration);
             this.Controls.Add(this.txtConPassword);
             this.Controls.Add(this.label4);
@@ -225,7 +226,6 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnRegistration;
         private System.Windows.Forms.TextBox txtConPassword;
         private System.Windows.Forms.Label label4;
