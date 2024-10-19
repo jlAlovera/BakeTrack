@@ -374,12 +374,17 @@ namespace OOP_BakeTrack_Final
 
         private void buttonRecord_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            sfd.RestoreDirectory = true;
+            string prod_folder = "Production Records";
+            bool exists = Directory.Exists(prod_folder);
 
-            if (sfd.ShowDialog() != DialogResult.OK)
+            if (!exists) {
+                Directory.CreateDirectory(prod_folder);
+            }
+
+            String filename = prod_folder + Path.DirectorySeparatorChar + "ProdList_" + DateTime.Now.ToShortDateString().Replace("/", "-") + ".txt";
+            if (File.Exists(filename))
             {
+                MessageBox.Show("Production list already exists! Please go back tomorrow.");
                 return;
             }
 
@@ -406,7 +411,7 @@ namespace OOP_BakeTrack_Final
             reader.Close();
             conn.Close();
 
-            File.WriteAllText(sfd.FileName, hold);
+            File.WriteAllText(filename, hold);
 
             conn = Connection.getConn();
             conn.Open();
