@@ -144,6 +144,12 @@ namespace OOP_BakeTrack_Final
                 return;
             }
 
+            {
+                int amount = Convert.ToInt32(textBoxAmount.Text);
+                double total = selectedPrice * amount;
+                RestockTotal.increase(total);
+            }
+
             String purchaseDate = DateTime.Now.ToShortDateString();
 
             SqlConnection conn = Connection.getConn();

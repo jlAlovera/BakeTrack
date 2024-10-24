@@ -119,6 +119,7 @@
     <Compile Include="registrationForm.Designer.cs">
       <DependentUpon>registrationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RestockTotal.cs" />
     <Compile Include="shoppingListWindow.cs">
       <SubType>Form</SubType>
     </Compile>

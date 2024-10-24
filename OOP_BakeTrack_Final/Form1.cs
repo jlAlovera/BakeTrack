@@ -14,9 +14,9 @@ namespace OOP_BakeTrack_Final
 {
     public partial class Form1 : Form
     {
-        SqlCommand cmd;
-        SqlConnection cq;
-        SqlDataReader rd;
+        private SqlCommand cmd;
+        private SqlConnection cq;
+        private SqlDataReader rd;
         mainWindow mainWindow = new mainWindow();
 
         registrationForm registrationForm = new registrationForm();
@@ -32,23 +32,31 @@ namespace OOP_BakeTrack_Final
             cq = Connection.getConn();
             cq.Open();
 
-            string query = "SELECT COUNT(*) FROM BakerTrack_Accounts WHERE UserName = @UserName";
+            string query = "SELECT Password FROM BakerTrack_Accounts WHERE UserName = @UserName ";
 
             try
             {
                 cmd = new SqlCommand(query, cq);
                 cmd.Parameters.AddWithValue("@UserName", username.Text);
+                SqlDataReader reader = cmd.ExecuteReader();
 
-                int userCount = (int)cmd.ExecuteScalar();
+                bool accountExist = false;
 
-                if (userCount > 0)
+                while (reader.Read())
                 {
-                    mainWindow.Show();
-                    this.Hide();
+                    accountExist = true;
+                    if (reader[0].ToString().Equals(password.Text)) {
+                        mainWindow.Show();
+                        this.Hide();
+                        break;
+                    } else {
+                        MessageBox.Show("Password doesn't match. Try again.");
+                        break;
+                    }
                 }
-                else
+                if (!accountExist)
                 {
-                    MessageBox.Show("Account name does not exists, please try again");
+                    MessageBox.Show("Account name does not exist, please try again.");
                 }
             }
             catch (Exception ex)

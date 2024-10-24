@@ -22,6 +22,7 @@ namespace OOP_BakeTrack_Final
         productionWindow productionWindow;
         shoppingListWindow shoppingListWindow;
 
+
         public mainWindow()
         {
             InitializeComponent();
@@ -30,6 +31,9 @@ namespace OOP_BakeTrack_Final
 
             updateDataGridViews();
             updateHeader();
+
+            this.Width = 1325;
+            this.Height = 670;
         }
 
         private void updateHeader()
@@ -53,7 +57,7 @@ namespace OOP_BakeTrack_Final
 
             labelAmountProduced.Text = String.Format("{0:0.00}", total_price);
             labelVarieties.Text = varieties.ToString();
-
+            labelRestockMoney.Text = "₱ " + String.Format("{0:0.00}", RestockTotal.get());
         }
 
         private void updateDataGridViews()

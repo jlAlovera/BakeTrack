@@ -25,8 +25,8 @@ namespace OOP_BakeTrack_Final
             InitializeComponent();
             refreshTable();
 
-            this.Width = 1766;
-            this.Height = 807;
+            this.Width = 1325;
+            this.Height = 670;
         }
 
         public void clearState()
@@ -421,7 +421,14 @@ namespace OOP_BakeTrack_Final
             cmd.ExecuteNonQuery();
             conn.Close();
 
+            RestockTotal.clear();
+
             clearState();
+        }
+
+        private void dataGridView_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

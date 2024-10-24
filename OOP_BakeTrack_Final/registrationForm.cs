@@ -13,9 +13,9 @@ namespace OOP_BakeTrack_Final
 {
     public partial class registrationForm : Form
     {
-        SqlCommand cmd;
-        SqlConnection cq;
-        SqlDataReader rd;
+        private SqlCommand cmd;
+        private SqlConnection cq;
+        private SqlDataReader rd;
 
         public registrationForm()
         {
@@ -56,7 +56,7 @@ namespace OOP_BakeTrack_Final
             }
     }
 
-    private void btnClear_Click(object sender, EventArgs e)
+        private void btnClear_Click(object sender, EventArgs e)
         {
             txtUsername.Clear();
             txtPassword.Clear();
